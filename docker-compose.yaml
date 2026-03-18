@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:15
+    container_name: coffee_db
+    environment:
+      POSTGRES_USER: nassim
+      POSTGRES_PASSWORD: nassimpassword
+      POSTGRES_DB: coffee_shop
+    ports:
+      - "5430:5432"
+
+  app:
+    build: .
+    container_name: coffee_backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_USER: nassim
+      DB_PASSWORD: nassimpassword
+      DB_HOST: db 
+      DB_PORT: 5432
+    depends_on:
+      - db
