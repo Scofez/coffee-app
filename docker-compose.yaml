@@ -8,12 +8,20 @@ services:
       POSTGRES_DB: coffee_shop
     ports:
       - "5430:5432"
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
 
   app:
     build: .
+    depends_on:
+      - db
+      - redis
     volumes:
       - .:/app            # Links your current folder to /app in the container
       - /app/node_modules # Prevents your local node_modules from overwriting the container's
     environment:
       - DATABASE_URL=postgresql://nassim:nassimpassword@db:5430/coffee_shop
+      - REDIS_URL=redis://redis:6379
     command: pnpm dev     # Run the dev command with the loader
