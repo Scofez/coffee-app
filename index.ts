@@ -2,15 +2,10 @@ import express, { type Request, type Response } from 'express';
 import pool from './db.js';
 import type { Customer, OrderHistory } from './types.js';
 
-import { initializeDatabase } from './initDb.js';
-
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
-
-//initialize database;  
-await initializeDatabase();
 
 // 1. Get All Customers (Type-Safe)
 app.get('/customers', async (req: Request, res: Response) => {
